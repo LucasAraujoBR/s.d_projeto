@@ -1,24 +1,40 @@
-<h1>Sistemas Distribuídos</h1>
-
+<h1>Backend</h1>
 
 ## Tecnologias
 <div style="display: inline_block">
 <img align="center" alt="Django" height="50" width="60" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-plain.svg">
+
 </div>
 
-## Descrição 
+## Inicialmente crie um .env na raiz do projeto e escre a linha de código a seguir
 
-Usuários
+```sh
+SECRET_KEY = 'django-insecure-r*^iriv7v@wqi@7j0+^y=apu+4e1xx3*34s_#i3os2_jc!uads'
+```
 
-Os usuários serão baseados em dois tipos de pessoas:
-<li> Admins </li>
-<li> Usuários comuns (Com cargos de Unidade de sáude "U.S" e Pacientes)</li>
+## Instalar dependências do projeto
 
-## Funcionalidades
+```sh
+pip install -r requirements.txt
+```
 
-<li>Sistema de Autenticação JWT Com Django</li>
-<li>Gestão de usuários</li>
-<li>Gestão financeira</li>
+## Executar o Projeto Localmente
+
+```sh
+python manage.py runserver
+```
+
+## Rodar migrações do banco de dados
+
+```sh
+python manage.py migrate
+```
+
+## <a href="http://localhost:8000">Interface</a>
+
+```sh
+Após rodar o projeto, entre na url http://localhost:8000
+```
 
 
 
