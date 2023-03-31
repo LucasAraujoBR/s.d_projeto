@@ -34,6 +34,17 @@ public class HotelController {
         return ResponseEntity.ok(qtDto);
     }
 
+    @PostMapping("reservar/{hotel}/{quarto}/{usuario}/{dataEntrada}/{dataSaida}")
+    public ResponseEntity<?> reservarQuarto(@PathVariable int hotel, @PathVariable int quarto,
+                                            @PathVariable String dataEntrada, @PathVariable String dataSaida,
+                                            @PathVariable int usuario){
+        String resposta = applicationService.reservarQuarto(hotel,quarto, dataEntrada, dataSaida, usuario);
+
+        return ResponseEntity.ok(resposta);
+    }
+
+
+
 
 
 
