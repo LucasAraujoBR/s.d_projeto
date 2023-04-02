@@ -166,7 +166,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Descrição:</label>
-                            <input type="text" class="form-control" id="inputText" name="password" required>
+                            <input type="text" class="form-control" id="inputText" name="descricao" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
@@ -281,6 +281,44 @@
             };
 
             fetch('/client/', {
+                    method: 'POST',
+                    headers,
+                    body: payload
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Não foi possível criar cliente.');
+                    } else {
+                        
+                        window.location.href = 'http://localhost:8000/onboard/'    //?user_data=' //+ encodeUserData;
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    console.log(JSON.stringify(data))
+                })
+                .catch(error => {
+                    //alert('Erro ao efetuar o login. Verifique suas credenciais e tente novamente.');
+                });
+        }
+        function sendEmail(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const email = form.email.value;
+            const descricao = form.descricao.value;
+          
+            
+
+            const payload = JSON.stringify({
+                email,
+                descricao
+            });
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            fetch('/client/send_email/', {
                     method: 'POST',
                     headers,
                     body: payload
