@@ -28,7 +28,7 @@ class Email(object):
 
 
 print('Email Server ...')
-daemon = Pyro4.Daemon.serveSimple({ Email: 'Calculator',}, host="localhost", port=8080, ns=False, verbose=True)				
+daemon = Pyro4.Daemon.serveSimple({ Email: 'Email',}, host="localhost", port=8080, ns=False, verbose=True)				
 ns = Pyro4.locateNS() 					
 server = Email()					
 uri = daemon.register(server)			
