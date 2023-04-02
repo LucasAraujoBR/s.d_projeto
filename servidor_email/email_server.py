@@ -3,11 +3,13 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
+
 @Pyro4.expose
 class Email(object):
     
-    def send_email(self, receiver,body):
-        # Configuração do e-mail
+    def sending_email(self, receiver, body):
+        # Configuração do e-mail self, receiver,body
         sender = 'noreply@hotel.com'
         receiver = receiver
         subject = 'Hotel'
@@ -22,7 +24,8 @@ class Email(object):
         # Conexão com o servidor SMTP e envio do e-mail
         with smtplib.SMTP("sandbox.smtp.mailtrap.io", 2525) as server:
             server.login("195530338e0fa0", "a6d078ddf300b0")
-            server.sendmail(sender, receiver, message)
+            server.sendmail(sender, receiver,message.as_string())
+       
 
     
 
