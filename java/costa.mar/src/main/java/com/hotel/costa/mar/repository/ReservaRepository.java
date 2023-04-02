@@ -17,4 +17,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
     @Query(value = "select * from reserva where id_quarto = ?1 " +
             "and hotel = ?2 and (( ?3 between data_entrada and data_saida) or ( ?4 between data_entrada and data_saida))", nativeQuery = true)
     Reserva testIfDatesAreBetweenReservas(int idQuarto, int idHotel, String dataEntrada, String dataSaida);
+
+    @Query(value = "select * from reserva where hotel = ?1", nativeQuery = true)
+    List<Reserva> findByHotel(int hotel);
 }

@@ -18,7 +18,8 @@ public class Hotel {
     @JsonManagedReference
     @OneToMany(mappedBy = "hotel")
     private List<Quarto> quartos;
-    private int codEstado;
+    private String nome;
+    private String siglaEstado;
     private String keyWord;
     private String endereco;
     private String descricao;

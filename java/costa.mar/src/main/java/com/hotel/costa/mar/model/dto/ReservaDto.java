@@ -3,8 +3,6 @@ package com.hotel.costa.mar.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 public class ReservaDto {
@@ -13,15 +11,20 @@ public class ReservaDto {
 
     private int id;
     private int idQuarto;
-    private int idUsuario;
-    private LocalDate dataEntrada;
-    private LocalDate dataSaida;
+    private String idUsuario;
+    private int idHotel;
+    private String dataEntrada;
+    private String dataSaida;
 
 
-    public ReservaDto(int id, int idQuarto, int idUsuario, LocalDate dataEntrada, LocalDate dataSaida) {
+    public ReservaDto(int id, int idQuarto, String idUsuario, String dataEntrada, String dataSaida, int idHotel ) {
         this.id = id;
         this.idQuarto = idQuarto;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
+        this.idHotel = idHotel;
+    }
+    public ReservaDto(){
+
     }
 }

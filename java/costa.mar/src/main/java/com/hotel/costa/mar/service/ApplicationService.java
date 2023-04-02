@@ -51,7 +51,7 @@ public class ApplicationService {
 
     @Transactional
     public String reservarQuarto(int hotel, int quarto, String dataEntrada,
-                                 String dataSaida, int usuario) {
+                                 String dataSaida, String usuario) {
 
         LocalDate dtIn = LocalDate.parse(dataEntrada);
         LocalDate dtOut = LocalDate.parse(dataSaida);
@@ -64,4 +64,6 @@ public class ApplicationService {
             return "Quarto já reservado nessa data";
         }
     }
+
+
 }

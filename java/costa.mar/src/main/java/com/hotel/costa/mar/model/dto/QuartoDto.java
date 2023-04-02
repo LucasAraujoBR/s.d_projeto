@@ -34,4 +34,8 @@ public class QuartoDto {
         this.descricaoQuarto = descricaoQuarto;
         this.reservas = reservas;
     }
+
+    public QuartoDto(){
+
+    }
 }

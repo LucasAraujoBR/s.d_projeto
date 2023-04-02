@@ -21,11 +21,11 @@ public class Reserva {
     private int id;
     private int hotel;
     private int idQuarto;
-    private int idUsuario;
+    private String idUsuario;
     private LocalDate dataEntrada;
     private LocalDate dataSaida;
 
-    public Reserva(int id, int hotel, int idQuarto, int idUsuario, LocalDate dataEntrada, LocalDate dataSaida) {
+    public Reserva(int id, int hotel, int idQuarto, String idUsuario, LocalDate dataEntrada, LocalDate dataSaida) {
         this.id = id;
         this.hotel = hotel;
         this.idQuarto = idQuarto;
@@ -34,7 +34,7 @@ public class Reserva {
         this.dataSaida = dataSaida;
     }
 
-    public Reserva(int hotel, int idQuarto, int idUsuario, LocalDate dataEntrada, LocalDate dataSaida) {
+    public Reserva(int hotel, int idQuarto,  String idUsuario, LocalDate dataEntrada, LocalDate dataSaida) {
         this.idQuarto = idQuarto;
         this.idUsuario = idUsuario;
         this.dataEntrada = dataEntrada;
@@ -43,6 +43,13 @@ public class Reserva {
     }
     public Reserva(){
 
+    }
+
+    public String toString(){
+        String texto = "";
+
+        texto = "Quarto: " + this.getIdQuarto() + " Data Entrada: " + this.getDataEntrada().toString();
+        return texto;
     }
 
 
