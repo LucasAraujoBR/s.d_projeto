@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Exemplo de GET automático</title>
+    <title>Hotel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -147,19 +147,50 @@
     <h1>Lista de clientes:</h1>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Criar cliente
+        Enviar Email
     </button>
-
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Criação de novo usuário</h4>
+                    <h4 class="modal-title" id="myModalLabel">Criação Email</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="myForm" method="post" action="http://localhost:8000/client/">
+                    <form onsubmit="sendEmail(event)">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="inputEmail">Email de destino:</label>
+                            <input type="email" class="form-control" id="inputEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Descrição:</label>
+                            <input type="text" class="form-control" id="inputText" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn2 btn-primary" data-toggle="modal" data-target="#myModal2">
+        Criar cliente
+    </button>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Criação de novo usuário</h4>
+                    <button type="button" class="close2" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="createUser(event)">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="inputNome">Nome:</label>
@@ -175,6 +206,8 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
+
+
                 </div>
             </div>
         </div>
@@ -183,10 +216,19 @@
 
     <script>
         var myModal = document.getElementById('myModal'); // seleciona o modal
+        var myModal2 = document.getElementById('myModal2'); // seleciona o modal
 
         var myBtn = document.querySelector('.btn'); // seleciona o botão que abre o modal
+        var myBtn2 = document.querySelector('.btn2'); // seleciona o botão que abre o modal
 
         var span = document.querySelector('.close'); // seleciona o botão "X" do modal
+        var span2 = document.querySelector('.close2'); // seleciona o botão "X" do modal
+
+       // const urlParams = new URLSearchParams(window.location.search);
+
+        //const userData = JSON.parse(decodeURIComponent(urlParams.get('user_data')));
+
+        //const encodeUserData = encodeURIComponent(userData);
 
         // quando o usuário clica no botão, abre o modal
         myBtn.onclick = function () {
@@ -204,6 +246,61 @@
                 myModal.style.display = "none";
             }
         }
+        myBtn2.onclick = function () {
+            myModal2.style.display = "block";
+        }
+
+        // quando o usuário clica no botão "X", fecha o modal
+        span2.onclick = function () {
+            myModal2.style.display = "none";
+        }
+
+        // quando o usuário clica fora do modal, fecha o modal
+        window.onclick = function (event) {
+            if (event.target == myModal2) {
+                myModal2.style.display = "none";
+            }
+        }
+
+        function createUser(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const email = form.email.value;
+            const password = form.password.value;
+            const name = form.nome.value;
+            
+
+            const payload = JSON.stringify({
+                email,
+                password,
+                name
+            });
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            fetch('/client/', {
+                    method: 'POST',
+                    headers,
+                    body: payload
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Não foi possível criar cliente.');
+                    } else {
+                        
+                        window.location.href = 'http://localhost:8000/onboard/'    //?user_data=' //+ encodeUserData;
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    console.log(JSON.stringify(data))
+                })
+                .catch(error => {
+                    //alert('Erro ao efetuar o login. Verifique suas credenciais e tente novamente.');
+                });
+        }
 
         function fazerGet() {
             var xhr = new XMLHttpRequest();
@@ -212,7 +309,7 @@
                 if (this.status == 200) {
                     var listaItens = JSON.parse(this.responseText);
                     var ul = document.getElementById('lista-itens');
-               
+
                     for (var i = 0; i < listaItens.data.length; i++) {
                         var obj = listaItens.data[i];
                         var li = document.createElement('li');
