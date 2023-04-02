@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from django.http import HttpResponsePermanentRedirect
 from rest_framework.views import APIView
 import os
+from django.shortcuts import render, redirect
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -39,12 +40,12 @@ class TokenObtainPairView(TokenObtainPairView):
     )
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-
+        print('entry')
         try:
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
             raise InvalidToken(e.args[0])
-
+    
         return Response({'data': serializer.validated_data}, status=status.HTTP_201_CREATED)
 
 

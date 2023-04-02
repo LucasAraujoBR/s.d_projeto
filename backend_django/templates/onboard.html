@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hotel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background-color: #f5f5f5;
+        }
+
+        /* Fundo escuro que cobre toda a tela */
+        .modal-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: none;
+        }
+
+        /* Centraliza o modal na tela */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            max-width: 90%;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            display: none;
+        }
+
+        /* Estilo para o cabeçalho do modal */
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para os botões do modal */
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        /* Estilo para os botões de ação */
+        .modal-buttons button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Estilo para os botões de ação ao passar o mouse */
+        .modal-buttons button:hover {
+            background-color: #555;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        #lista-itens {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 1em;
+            margin: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 0 0 0.5em 0;
+        }
+
+        p {
+            margin: 0.5em 0;
+        }
+
+        p:first-child {
+            font-weight: bold;
+        }
+
+        :root {
+            --primary-color: #333;
+            --secondary-color: #fff;
+            --border-color: #ccc;
+        }
+
+        li {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        h1,
+        h2,
+        p {
+            color: var(--primary-color);
+        }
+
+        body {
+            font-size: 100%;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                font-size: 120%;
+            }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+
+<body onload="fazerGet()">
+    <h1>Lista de clientes:</h1>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Enviar Email
+    </button>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Criação Email</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="sendEmail(event)">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="inputEmail">Email de destino:</label>
+                            <input type="email" class="form-control" id="inputEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Descrição:</label>
+                            <input type="text" class="form-control" id="inputText" name="descricao" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn2 btn-primary" data-toggle="modal" data-target="#myModal2">
+        Criar cliente
+    </button>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Criação de novo usuário</h4>
+                    <button type="button" class="close2" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="createUser(event)">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="inputNome">Nome:</label>
+                            <input type="text" class="form-control" id="inputNome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Email:</label>
+                            <input type="email" class="form-control" id="inputEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail">Password:</label>
+                            <input type="text" class="form-control" id="inputPasword" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul id="lista-itens"></ul>
+
+    <script>
+        var myModal = document.getElementById('myModal'); // seleciona o modal
+        var myModal2 = document.getElementById('myModal2'); // seleciona o modal
+
+        var myBtn = document.querySelector('.btn'); // seleciona o botão que abre o modal
+        var myBtn2 = document.querySelector('.btn2'); // seleciona o botão que abre o modal
+
+        var span = document.querySelector('.close'); // seleciona o botão "X" do modal
+        var span2 = document.querySelector('.close2'); // seleciona o botão "X" do modal
+
+       // const urlParams = new URLSearchParams(window.location.search);
+
+        //const userData = JSON.parse(decodeURIComponent(urlParams.get('user_data')));
+
+        //const encodeUserData = encodeURIComponent(userData);
+
+        // quando o usuário clica no botão, abre o modal
+        myBtn.onclick = function () {
+            myModal.style.display = "block";
+        }
+
+        // quando o usuário clica no botão "X", fecha o modal
+        span.onclick = function () {
+            myModal.style.display = "none";
+        }
+
+        // quando o usuário clica fora do modal, fecha o modal
+        window.onclick = function (event) {
+            if (event.target == myModal) {
+                myModal.style.display = "none";
+            }
+        }
+        myBtn2.onclick = function () {
+            myModal2.style.display = "block";
+        }
+
+        // quando o usuário clica no botão "X", fecha o modal
+        span2.onclick = function () {
+            myModal2.style.display = "none";
+        }
+
+        // quando o usuário clica fora do modal, fecha o modal
+        window.onclick = function (event) {
+            if (event.target == myModal2) {
+                myModal2.style.display = "none";
+            }
+        }
+
+        function createUser(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const email = form.email.value;
+            const password = form.password.value;
+            const name = form.nome.value;
+            
+
+            const payload = JSON.stringify({
+                email,
+                password,
+                name
+            });
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            fetch('/client/', {
+                    method: 'POST',
+                    headers,
+                    body: payload
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Não foi possível criar cliente.');
+                    } else {
+                        
+                        window.location.href = 'http://localhost:8000/onboard/'    //?user_data=' //+ encodeUserData;
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    console.log(JSON.stringify(data))
+                })
+                .catch(error => {
+                    //alert('Erro ao efetuar o login. Verifique suas credenciais e tente novamente.');
+                });
+        }
+        function sendEmail(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const email = form.email.value;
+            const descricao = form.descricao.value;
+          
+            
+
+            const payload = JSON.stringify({
+                email,
+                descricao
+            });
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            fetch('/client/send_email/', {
+                    method: 'POST',
+                    headers,
+                    body: payload
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Não foi possível criar cliente.');
+                    } else {
+                        
+                        window.location.href = 'http://localhost:8000/onboard/'    //?user_data=' //+ encodeUserData;
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    console.log(JSON.stringify(data))
+                })
+                .catch(error => {
+                    //alert('Erro ao efetuar o login. Verifique suas credenciais e tente novamente.');
+                });
+        }
+
+        function fazerGet() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:8000/client/', true);
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    var listaItens = JSON.parse(this.responseText);
+                    var ul = document.getElementById('lista-itens');
+
+                    for (var i = 0; i < listaItens.data.length; i++) {
+                        var obj = listaItens.data[i];
+                        var li = document.createElement('li');
+                        var h2 = document.createElement('h2');
+                        var p1 = document.createElement('p');
+                        var p2 = document.createElement('p');
+                        var p3 = document.createElement('p');
+                        var p4 = document.createElement('p');
+                        h2.textContent = obj.name;
+                        p1.textContent = 'ID: ' + obj.id;
+                        p2.textContent = 'Email: ' + obj.email;
+                        p3.textContent = 'Tier: ' + obj.tier;
+                        p4.textContent = 'Created at: ' + obj.created_at;
+                        li.appendChild(h2);
+                        li.appendChild(p1);
+                        li.appendChild(p2);
+                        li.appendChild(p3);
+                        li.appendChild(p4);
+                        ul.appendChild(li);
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

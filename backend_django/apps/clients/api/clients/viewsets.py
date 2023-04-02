@@ -1,3 +1,6 @@
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
 from apps.clients.models import Client
 from apps.clients.api.clients.serializers import *
 from rest_framework import status
@@ -10,6 +13,9 @@ from drf_spectacular.types import OpenApiTypes
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import action
+import Pyro4
+from Pyro4 import Proxy
 
 
 class ClientViewSet(ModelViewSet):
@@ -149,3 +155,16 @@ class ClientViewSet(ModelViewSet):
         return Response(response)
 
     
+    
+    @action(detail=False, methods=['post'], url_path='send_email', url_name='send_email')
+    def email_send(self, request, *args, **kwargs):
+        if 'email' in request.data and 'descricao' in request.data:  
+             
+            email_proxy = Proxy("PYRO:Email@localhost:8080")
+            email_proxy.sending_email(receiver=request.data['email'],body=request.data['descricao'])
+            return Response(status=status.HTTP_200_OK)
+        
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+       
+       

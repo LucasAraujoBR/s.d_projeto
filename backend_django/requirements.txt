@@ -14,3 +14,5 @@ uritemplate==4.1.1
 djangorestframework-simplejwt==5.2.2 
 pyjwt==2.6.0
 decouple==0.0.7
+Pyro4==4.82 
+serpent==1.41
