@@ -48,7 +48,7 @@ public class Reserva {
     public String toString(){
         String texto = "";
 
-        texto = "Quarto: " + this.getIdQuarto() + " Data Entrada: " + this.getDataEntrada().toString();
+        texto = "Quarto: " + this.getIdQuarto() + " Data Entrada: " + this.getDataEntrada().toString() + " " + this.getIdUsuario();
         return texto;
     }
 
