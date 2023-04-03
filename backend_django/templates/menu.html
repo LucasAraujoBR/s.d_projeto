@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hotel - Menu</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 0;
+        }
+
+        footer{
+            padding-top: 50px;
+        }
+        button:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bem-vindo ao menu</h1>
+    <p>Escolha uma opção:</p>
+    <div>
+        <button id="btn-criar-reserva">Criar reserva</button>
+        <button id="btn-criar-hotel">Criar hotel</button>
+        <button id="btn-criar-quarto">Criar quarto</button>
+        <button id="btn-cancelar-reserva">Cancelar reserva</button>
+    </div>
+
+    <footer><button onclick="window.location.href='http://localhost:8000/onboard/'">Voltar</button></footer>
+    <script>
+        var btnCriarReserva = document.getElementById('btn-criar-reserva');
+        var btnCriarHotel = document.getElementById('btn-criar-hotel');
+        var btnCriarQuarto = document.getElementById('btn-criar-quarto');
+        var btnCancelaReserva = document.getElementById('btn-cancelar-reserva');
+
+        btnCriarReserva.addEventListener('click', function () {
+            alert('Você clicou em Criar reserva!');
+        });
+
+        btnCriarHotel.addEventListener('click', function () {
+            alert('Você clicou em Criar hotel!');
+        });
+
+        btnCriarQuarto.addEventListener('click', function () {
+            alert('Você clicou em Criar quarto!');
+        });
+
+        btnCancelaReserva.addEventListener('click', function () {
+            alert('Você clicou em Cancelar reserva!');
+        });
+    </script>
+</body>
+
+</html>

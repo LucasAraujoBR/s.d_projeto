@@ -20,7 +20,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from django.conf import settings
 from django.conf.urls.static import static
 
-from apps.clients.views import Login, Onboard
+from apps.clients.views import Login, Onboard, Menu
 app_name = 'backend'
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +30,6 @@ urlpatterns = [
     path('client/', include('apps.clients.api.clients.urls'), name='Clients'),
     path('login/', Login.as_view(), name='Login'),
     path('onboard/', Onboard.as_view(), name='Onboard'),
+    path('menu/', Menu.as_view(), name='Menu'),
 
 ]
