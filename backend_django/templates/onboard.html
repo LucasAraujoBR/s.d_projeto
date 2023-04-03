@@ -170,7 +170,7 @@
 
     <h1>Lista de clientes:</h1>
     <div style="display: flex; align-items: center; justify-content: center;">
-        <button onclick="window.location.href='http://localhost:8000/menu/'" class="botao">Menu - Hotel</button>
+        <button id='botao_id' class="botao">Menu - Hotel</button>
     </div>
     <div style="display: flex; align-items: center; justify-content: center;">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -246,6 +246,7 @@
     <script>
         var myModal = document.getElementById('myModal'); // seleciona o modal
         var myModal2 = document.getElementById('myModal2'); // seleciona o modal
+        var botao = document.getElementById('botao_id'); // seleciona o modal
 
         var myBtn = document.querySelector('.btn'); // seleciona o botão que abre o modal
         var myBtn2 = document.querySelector('.btn2'); // seleciona o botão que abre o modal
@@ -253,13 +254,15 @@
         var span = document.querySelector('.close'); // seleciona o botão "X" do modal
         var span2 = document.querySelector('.close2'); // seleciona o botão "X" do modal
 
-        // const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search);
 
-        //const userData = JSON.parse(decodeURIComponent(urlParams.get('user_data')));
-
+        const userData = JSON.parse(decodeURIComponent(urlParams.get('user_data')));
+        const userDataString = encodeURIComponent(JSON.stringify(userData));
         //const encodeUserData = encodeURIComponent(userData);
-
-
+   
+        botao.onclick = function(){
+            window.location.href='http://localhost:8000/menu/?user_data=' + userDataString
+        }
 
 
         myBtn.onclick = function () {
@@ -308,9 +311,10 @@
                 name
             });
             const headers = {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + userData.data.access
             };
-
+            console.log(headers)
             fetch('/client/', {
                     method: 'POST',
                     headers,
@@ -320,13 +324,13 @@
                     if (!response.ok) {
                         throw new Error('Não foi possível criar cliente.');
                     } else {
-
-                        window.location.href = 'http://localhost:8000/onboard/' //?user_data=' //+ encodeUserData;
+                        location.reload()
+                        //window.location.href = 'http://localhost:8000/onboard/?user_data=' + userData.data
                         return response.json();
                     }
                 })
                 .then(data => {
-                    console.log(JSON.stringify(data))
+
                 })
                 .catch(error => {
                     //alert('Erro ao efetuar o login. Verifique suas credenciais e tente novamente.');

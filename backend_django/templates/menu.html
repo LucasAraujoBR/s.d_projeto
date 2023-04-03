@@ -47,12 +47,22 @@
         <button id="btn-cancelar-reserva">Cancelar reserva</button>
     </div>
 
-    <footer><button onclick="window.location.href='http://localhost:8000/onboard/'">Voltar</button></footer>
+    <footer><button id="btn_voltar">Voltar</button></footer>
     <script>
         var btnCriarReserva = document.getElementById('btn-criar-reserva');
         var btnCriarHotel = document.getElementById('btn-criar-hotel');
         var btnCriarQuarto = document.getElementById('btn-criar-quarto');
         var btnCancelaReserva = document.getElementById('btn-cancelar-reserva');
+        var btnVoltar = document.getElementById('btn_voltar');
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const userData = JSON.parse(decodeURIComponent(urlParams.get('user_data')));
+        const userDataString = encodeURIComponent(JSON.stringify(userData));
+
+        btnVoltar.onclick = function(){
+            window.location.href='http://localhost:8000/onboard/?user_data=' + userDataString
+        }
 
         btnCriarReserva.addEventListener('click', function () {
             alert('Você clicou em Criar reserva!');

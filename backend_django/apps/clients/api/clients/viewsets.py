@@ -20,7 +20,7 @@ from Pyro4 import Proxy
 
 class ClientViewSet(ModelViewSet):
     
-    queryset = Client.objects.all()
+    queryset = Client.objects.all().order_by('-created_at')
     serializer_class = ClientSeralizer
 
     permission_classes = (AllowAny,)
@@ -65,7 +65,7 @@ class ClientViewSet(ModelViewSet):
         status.HTTP_400_BAD_REQUEST : SwaggerErrorDefault
         })
     def create(self, request):
-
+        permission_classes = (IsAuthenticatedSimpleCustom,)
         data =  self.request.data
       
         if 'password' in data:
