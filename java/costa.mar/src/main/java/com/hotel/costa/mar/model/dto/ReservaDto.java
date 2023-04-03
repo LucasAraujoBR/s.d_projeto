@@ -23,8 +23,15 @@ public class ReservaDto {
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
         this.idHotel = idHotel;
+        this.idUsuario = idUsuario;
     }
     public ReservaDto(){
 
+    }
+
+    public String toString(){
+        String texto = "";
+        texto = "Quarto: " + this.getIdQuarto() + " Data Entrada: " + this.getDataEntrada().toString() + " " + this.getIdUsuario();
+        return texto;
     }
 }

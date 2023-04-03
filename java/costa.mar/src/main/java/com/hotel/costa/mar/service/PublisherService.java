@@ -80,4 +80,8 @@ public class PublisherService {
         List<QuartoDto> dtos = mapper.quartoToDto(quartos);
         return dtos;
     }
+
+    public void salvarCancelamento(int idReserva) {
+        reservaRepository.delete(reservaRepository.findById(idReserva).get());
+    }
 }

@@ -32,7 +32,7 @@ public class AdmController {
         return "index";
     }
 
-    @GetMapping(value = "/cadastrarhotel")
+    @GetMapping(value = "/cadastrarHotel")
     public String cadastroHotel(Model model){
         model.addAttribute("hotelParaCadastro", new HotelDto());
         return "cadastrarHotel";
@@ -42,7 +42,7 @@ public class AdmController {
                     method = RequestMethod.POST)
     public String salvarHotel(Model model, @ModelAttribute("hotelParaCadastro") HotelDto hotelParaCadastro){
         publisherService.salvarHotel(hotelParaCadastro);
-        return "index";
+        return "atividadeSalva";
     }
     @GetMapping(value = "/cadastrarQuarto")
     public String cadastrarQuarto(Model model){
@@ -56,7 +56,7 @@ public class AdmController {
             method = RequestMethod.POST)
     public String salvarHotel(Model model, @ModelAttribute("quartoParaCadastro") QuartoDto quartoParaCadastro){
         publisherService.salvarQuarto(quartoParaCadastro);
-        return "index";
+        return "atividadeSalva";
     }
     @GetMapping(value = "/cadastrarReserva")
     public String criarReserva(Model model){
@@ -96,14 +96,27 @@ public class AdmController {
     public String reservarQuarto(@ModelAttribute("reservaParaCadastro") ReservaDto reservaDto, Model model){
         String texto = applicationService.reservarQuarto(reservaDto.getIdHotel(), reservaDto.getIdQuarto(), LocalDate.now().toString(), reservaDto.getDataSaida(), reservaDto.getIdUsuario());
         model.addAttribute("situcao", texto);
-        return "fimReserva";
+        return "atividadeSalva";
     }
-    @GetMapping(value = "/cancelar-reservar/{hotel}")
-    public String cancelarReserva(Model model, @PathVariable int hotel){
-        List<ReservaDto> reservaDtos = publisherService.findAllReservasNoHotel(hotel);
-        model.addAttribute("reservas", reservaDtos);
-
+    @GetMapping(value = "/cancelarReserva")
+    public String cancelarReserva(Model model){
+        model.addAttribute("hoteis", applicationService.getAllHotels());
+        model.addAttribute("reservas", null);
         return "cancelarReserva";
+    }
+    @GetMapping(value = "/cancelarReserva/{hotel}")
+    public String cancelarReservaHotel(Model model, @PathVariable int hotel){
+        List<ReservaDto> reservaDtos = publisherService.findAllReservasNoHotel(hotel);
+        model.addAttribute("hoteis", applicationService.getAllHotels());
+        model.addAttribute("reservas", reservaDtos);
+        return "cancelarReserva";
+    }
+
+    @GetMapping(value = "/salvarCancelamento/{idReserva}")
+    public String salvarCancelamentoReserva(Model model, @PathVariable int idReserva){
+
+        publisherService.salvarCancelamento(idReserva);
+        return "atividadeSalva";
     }
 
 

@@ -23,12 +23,25 @@
     <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-4">
-        <h2>Selecione Reserva e Faça o Cancelamento</h2>
+        <div class="form-group row"><label class="col-sm-2 col-form-label" >Hotel</label>
+          <div class="col-sm-10">
+            <select class="form-control m-b" name="select_Abrigo" id="select_Abrigo"
+                    style="margin-bottom: 0px;" onchange="selectHotel(this.value);"
+                    data-placeholder="Selecione o Abrigo" tabindex="2" required>
+              <option th:text="${hotelEscolhido}"></option>
+              <a th:each="hotel:${hoteis}">
+                <option th:text="${hotel.getNome()}" th:value="${hotel.getIdHotel()}"></option>
+              </a>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row"><label>Selecione Reserva e Faça o Cancelamento</label>
         <select class="form-control m-b" name="account" id="reserva">
           <option th:each="re : ${reservas}" th:value="${re.getId()}" th:text="${re.toString()}">
           </option>
         </select>
       </div>
+        <button type="button" class="btn btn-primary btn-lg" onclick="sendCancelamento()">Salvar Cancelamento</button>
       <div class="col-md-4"></div>
     </div>
 
@@ -47,11 +60,12 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script>
-  function selectAbrigo(value) {
-    window.location.href = '/cadastrarPessoa/' + value;
+  function selectHotel(value) {
+    window.location.href = '/cancelarReserva/' + value;
   }
-  function selectLocalidade(value) {
-    window.location.href = '/localidade/' + value;
+  function sendCancelamento() {
+    console.log(document.getElementById("reserva").value)
+    window.location.href = '/salvarCancelamento/' + document.getElementById("reserva").value ;
   }
 </script>
 
