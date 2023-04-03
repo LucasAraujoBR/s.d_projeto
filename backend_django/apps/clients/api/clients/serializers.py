@@ -20,7 +20,7 @@ class ClientSeralizerList(serializers.ModelSerializer):
 
     class Meta:
         model = Client
-        exclude = ('password',)
+        fields = ('email',)
         read_only_fields = (
             'id',
             'created_at',

@@ -141,11 +141,11 @@ class ClientViewSet(ModelViewSet):
         permission_classes = (IsAuthenticatedSimpleCustom,)
         queryset = self.filter_queryset(self.get_queryset())
 
-        page = self.paginate_queryset(queryset)
+        # page = self.paginate_queryset(queryset)
 
-        if page is not None:
-            response = self.get_response_model_get(page)
-            return self.get_paginated_response(response)
+        # if page is not None:
+        #     response = self.get_response_model_get(page)
+        #     return self.get_paginated_response(response)
 
 
         serializer = self.get_serializer(queryset, many=True)
