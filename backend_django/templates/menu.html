@@ -61,23 +61,23 @@
         const userDataString = encodeURIComponent(JSON.stringify(userData));
 
         btnVoltar.onclick = function(){
-            window.location.href='http://localhost:8000/onboard/?user_data=' + userDataString
+            window.location.href='http://localhost:8000/onboard'
         }
 
         btnCriarReserva.addEventListener('click', function () {
-            alert('Você clicou em Criar reserva!');
+            window.location.href='http://localhost/cadastrarReserva'
         });
 
         btnCriarHotel.addEventListener('click', function () {
-            alert('Você clicou em Criar hotel!');
+            window.location.href='http://localhost/cadastrarHotel'
         });
 
         btnCriarQuarto.addEventListener('click', function () {
-            alert('Você clicou em Criar quarto!');
+            window.location.href='http://localhost/cadastrarQuarto'
         });
 
         btnCancelaReserva.addEventListener('click', function () {
-            alert('Você clicou em Cancelar reserva!');
+            window.location.href='http://localhost/cancelarReserva'
         });
     </script>
 </body>
