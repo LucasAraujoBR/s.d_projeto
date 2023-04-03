@@ -5,6 +5,7 @@ import com.hotel.costa.mar.model.Reserva;
 import com.hotel.costa.mar.model.dto.HotelDto;
 import com.hotel.costa.mar.model.dto.QuartoDto;
 import com.hotel.costa.mar.model.dto.ReservaDto;
+import com.hotel.costa.mar.model.dto.Usuario;
 import com.hotel.costa.mar.service.ApplicationService;
 import com.hotel.costa.mar.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -58,6 +60,12 @@ public class AdmController {
     }
     @GetMapping(value = "/cadastrarReserva")
     public String criarReserva(Model model){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Usuario[]> response = restTemplate.getForEntity("http://localhost:8000/client/",Usuario[].class);
+        Usuario[] usuarios = response.getBody();
+
+
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("reservaParaCadastro", new ReservaDto());
         model.addAttribute("hoteis", applicationService.getAllHotels());
         model.addAttribute("quartos", null);
@@ -69,6 +77,11 @@ public class AdmController {
 
     @GetMapping(value = "/cadastrarReserva/{hotel}")
     public String criarReservaEscolhidoHotel(Model model, @PathVariable("hotel") int idHotel){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Usuario[]> response = restTemplate.getForEntity("http://localhost:8000/client/",Usuario[].class);
+        Usuario[] usuarios = response.getBody();
+
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("hotelEscolhido", applicationService.findHotelById(idHotel).getNome());
         model.addAttribute("hoteis", applicationService.getAllHotels());
         model.addAttribute("quartos", publisherService.getQuartosFromHotel(idHotel));
