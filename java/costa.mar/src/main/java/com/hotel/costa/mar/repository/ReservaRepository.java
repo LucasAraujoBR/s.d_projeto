@@ -20,4 +20,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 
     @Query(value = "select * from reserva where hotel = ?1", nativeQuery = true)
     List<Reserva> findByHotel(int hotel);
+
+    @Query(value = "select id_usuario from reserva where id = ?1", nativeQuery = true)
+    String findEmailFromId(int idReserva);
 }
