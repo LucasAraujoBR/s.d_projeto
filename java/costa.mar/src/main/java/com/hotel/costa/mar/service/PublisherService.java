@@ -13,7 +13,15 @@ import com.hotel.costa.mar.repository.QuartoRepository;
 import com.hotel.costa.mar.repository.ReservaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+
+import java.net.Proxy;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -82,6 +90,23 @@ public class PublisherService {
     }
 
     public void salvarCancelamento(int idReserva) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://localhost:8000/client/send_email/";
+        String emailReserva = reservaRepository.findEmailFromId(idReserva);
+        // Criando o corpo da requisição
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String requestBody = "{\"email\":\"" + emailReserva+"\",\"descricao\":\"Sua reserva foi cancelada\"}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Fazendo a requisição POST
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+
+        // Exibindo a resposta
+        System.out.println(response.getBody());
         reservaRepository.delete(reservaRepository.findById(idReserva).get());
     }
 }

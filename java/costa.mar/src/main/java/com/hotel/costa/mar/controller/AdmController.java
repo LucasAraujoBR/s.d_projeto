@@ -115,6 +115,9 @@ public class AdmController {
     @GetMapping(value = "/salvarCancelamento/{idReserva}")
     public String salvarCancelamentoReserva(Model model, @PathVariable int idReserva){
 
+
+
+
         publisherService.salvarCancelamento(idReserva);
         return "atividadeSalva";
     }
