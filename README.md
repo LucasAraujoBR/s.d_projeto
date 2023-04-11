@@ -7,8 +7,8 @@
 <img align="center" alt="Django" height="50" width="60" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-plain.svg">
 </div>
 
-## Descrição 
-
+## Documentação do projeto 
+<h3>https://docs.google.com/document/d/1yWqW5Re4IG6296JNRePLduUnRn30ZV-e5JysnC40R8Q/edit?usp=sharing</h3>
 Usuários
 
 Os usuários serão baseados em tier's:
